@@ -1,3 +1,4 @@
+'use strict';
 const url = "https://api.github.com/orgs/HackYourFuture/repos?per_page=100";
 
 function fetchJSON(url, cb) {
@@ -18,6 +19,7 @@ function fetchJSON(url, cb) {
     };
     xhr.send();
 }
+
 function callback(error, data) {
     if (error !== null) {
         // console.error(error);
@@ -38,7 +40,7 @@ function renderRepos(repos) {
     repos.forEach(repo => {
         const option = createAndAppend('option', select);
         option.innerHTML = repo.name;
-        option.setAttribute('value', repo.name)
+        option.setAttribute('value', repo.name);
     });
 }
 
@@ -52,32 +54,33 @@ function reposInfo(event) {
     // console.log(event.target.value)
     const urlCon = 'https://api.github.com/repos/HackYourFuture/' + event.target.value + '/contributors';
     const repoUrl = 'https://api.github.com/repos/HackYourFuture/' + event.target.value;
-    fetchJSON(urlCon, list_render_con);
-    fetchJSON(repoUrl, reop_info);
+    fetchJSON(urlCon, listRenderCon);
+    fetchJSON(repoUrl, reopInfo);
 
 }
-function list_render_con(err, data_con) {
+
+function listRenderCon(err, dataCon) {
     if (err !== null) {
         // console.log(err);
     } else {
-        // console.log(data_con);
-        renderContributors(data_con);
+        // console.log(dataCon);
+        renderContributors(dataCon);
     }
 }
-function reop_info(err, data_con) {
+function reopInfo(err, dataCon) {
     if (err !== null) {
         // console.log(err);
     } else {
-        // console.log(data_con);
-        render_reop_infoTOHTML(data_con);
+        // console.log(dataCon);
+        renderReopInfoTOHTML(dataCon);
     }
 }
-function render_reop_infoTOHTML(repoInfo) {
+function renderReopInfoTOHTML(repoInfo) {
     const repoContainer = document.getElementById('repo-container');
     repoContainer.innerHTML = '';
     const p = createAndAppend('p', repoContainer);
-    const repoName = createAndAppend('p', repoContainer)
-    const forks = createAndAppend('p', repoContainer)
+    const repoName = createAndAppend('p', repoContainer);
+    const forks = createAndAppend('p', repoContainer);
     const updated = createAndAppend('p', repoContainer);
     repoName.innerHTML = 'Repository &nbsp;&nbsp;&nbsp;' + repoInfo.name;
     forks.innerHTML = repoInfo.forks_count;
@@ -101,7 +104,7 @@ function renderContributors(contributors) {
         li.innerHTML = contri.login + " " + contri.contributions + "<img src=" + contri.avatar_url + ">";
         // img.innerHTML = contri.avatar_url;
         img.setAttribute('src', contri.avatar_url);
-        li.setAttribute('value', contri.login)
+        li.setAttribute('value', contri.login);
     });
 }
 function createAndAppend1(tageName, parent) {
